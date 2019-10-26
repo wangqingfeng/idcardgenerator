@@ -112,8 +112,8 @@ def generator():
         #im = paste(avatar, im, (500, 670), (690, 1500))
         
 
-    im.save('color.png')
-    im.convert('L').save('bw.png')
+    im.save('/data/back/idcardgenerator/create/color.png')
+    im.convert('L').save('/data/back/idcardgenerator/create/bw.png')
 
     showinfo(u'成功', u'文件已生成到目录下,黑白bw.png和彩色color.png')
 
