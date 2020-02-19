@@ -119,6 +119,19 @@ def read_txt_to_list(filename_txt):
     print("Deal with folder/txt file: %s[size: %s]" %(filename_txt, len(imglist)))
     return imglist
 
+def resize_foldimg(listfiledir):
+    imglist = read_txt_to_list(listfiledir)
+    for item in imglist:
+        img = Image.open(item)
+        if img.size[0] < 2000:
+            continue
+        print(item)
+        if img.mode == 'RGBA':
+            img = img.convert('RGB')
+        img = img.resize((int(img.size[0] * 0.5), int(img.size[1] * 0.5)))
+        img.save(item)
+
+
 def changeBackground(img, img_back, zoom_size, center):
     # 缩放
     img = cv2.resize(img, zoom_size)
@@ -159,6 +172,8 @@ def paste(avatar, bg, zoom_size, center):
 def generator(name, sex, nation, year, mon, day, addr, idn, org, life,savedir):
     global g_num_saved
     g_num_saved += 1
+    if g_num_saved < 144058:
+        return 0
 
     # fname = askopenfilename(parent=root, initialdir=os.getcwd(), title=u'选择头像')
     # print fname
@@ -212,7 +227,12 @@ def generator(name, sex, nation, year, mon, day, addr, idn, org, life,savedir):
     if not os.path.exists(saved_full_path):
         os.mkdir(saved_full_path)
     saved_full_path += saved_labelname
-    im.save(saved_full_path)
+    # im.save(saved_full_path)
+    im_rgb = im
+    if im_rgb.mode == 'RGBA':
+        im_rgb = im_rgb.convert('RGB')
+    im_rgb = im_rgb.resize((int(img_rgb.size[0]*0.5),int(img_rgb.size[1]*0.5)))
+    im_rgb.save(saved_full_path)
     saved_full_path = savedir + '/gray/'
     if not os.path.exists(saved_full_path):
         os.mkdir(saved_full_path)
@@ -222,6 +242,9 @@ def generator(name, sex, nation, year, mon, day, addr, idn, org, life,savedir):
     imgMark = imgMark.resize((w_m,h_m))
     imgray = watermark(im, imgMark, POSITION[random.randint(0, 4)], random.randint(5,9)/10.0).convert('L')
     # imgray = imgray.point(lambda p: p * random.randint(5,10)/10.0)
+    if imgray.mode == 'RGBA':
+        imgray = imgray.convert('RGB')
+    imgray = imgray.resize((int(imgray.size[0]*0.5),int(imgray.size[1]*0.5)))
     imgray.save(os.path.join(saved_full_path,saved_labelname))
 
 def create_idcard_whole(filanme_xs,filename_xm,filename_mz,filename_zz,savedir):
@@ -310,6 +333,8 @@ if __name__ == '__main__':
     filename_mz = '/data/back/idcardgenerator/resource/mz.txt'
     filename_zzall = '/data/OCR/省市县街道数据/address_wholeall.txt'
     # /data/back/idcardgenerator/resource/name.txt
-
-    savedir = '/data/data/SFZ/身份证比赛数据/create_whole'
-    create_idcard_whole(filename_xs,filename_name,filename_mz,filename_zzall,savedir)
+    #
+    # savedir = '/data/data/SFZ/身份证比赛数据/create_whole'
+    # create_idcard_whole(filename_xs,filename_name,filename_mz,filename_zzall,savedir)
+    folder_img = '/data/data/SFZ/身份证比赛数据/create_whole/color'
+    resize_foldimg(folder_img)
