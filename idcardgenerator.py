@@ -15,7 +15,7 @@ except ImportError:
     from tkinter.filedialog import *
     from tkinter.messagebox import *
 
-
+from math import log2
 if getattr(sys, 'frozen', None):
     base_dir = os.path.join(sys._MEIPASS, 'usedres')
 else:

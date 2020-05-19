@@ -235,13 +235,13 @@ def read_txt_to_list(filename_txt):
 sfz_zz=readTxt('/data/OCR/省市县街道数据/address_whole.txt')
 
 
-savePath = '/data/data/SFZ/身份证比赛数据/create_1026/'
+savePath = '/data/data/SFZ/身份证比赛数据/create_0311/'
 
 pridex = '1'
 
 
 
-templateDir = '/data_2/Char/template'
+templateDir = '/data/back/idcardgenerator/template'
 templateList = os.listdir( templateDir)
 for  template in templateList:
     templatePath = os.path.join( templateDir, template)
@@ -277,7 +277,7 @@ for  template in templateList:
                 w_new = 8 + char_size * len(ch_temp) + 2 * len(ch_temp)
                 if(random.randint(0,20)%8 ==0 ):
                     w_new += char_size*2
-                if template != '1.png':
+                if template != '00.png':
                     imagetemp = image.resize((w_new, h_new), resample=Image.LANCZOS)
                 else:
                     imagetemp = image
@@ -299,10 +299,11 @@ for  template in templateList:
                     os.mkdir(savedir)
                 savedir = savedir + '/'
                 savename = savedir + pridex + '_' + ch_temp + '.jpg'
-                if random.randint(0,1000)%2 == 0:
-                    watermark(imagetemp,imgMark,POSITION[random.randint(0,4)],random.randint(3,9)/10.0).save(savename,'jpeg')
-                else:
-                    imagetemp.save(savename, 'jpeg')
+                imagetemp.save(savename, 'jpeg')
+                # if random.randint(0,1000)%2 == 0:
+                #     watermark(imagetemp,imgMark,POSITION[random.randint(0,4)],random.randint(3,9)/10.0).save(savename,'jpeg')
+                # else:
+                #     imagetemp.save(savename, 'jpeg')
                 ch_temp = ch
 
         image = Image.open(templatePath)
@@ -310,7 +311,7 @@ for  template in templateList:
         w_new = 8 + char_size * len(ch_temp) + 2 * len(ch_temp)
         if (random.randint(0, 20) % 8 == 0):
             w_new += char_size * 2
-        if template != '1.png':
+        if template != '00.png':
             imagetemp = image.resize((w_new, h_new), resample=Image.LANCZOS)
         else:
             imagetemp = image
@@ -332,10 +333,11 @@ for  template in templateList:
             os.mkdir(savedir)
         savedir = savedir + '/'
         savename = savedir + pridex + '_' + ch_temp + '.jpg'
-        if random.randint(0, 1000) % 4 == 0:
-            watermark(imagetemp, imgMark, POSITION[random.randint(0, 4)], random.randint(3,8)/10.0).save(savename, 'jpeg')
-        else:
-            imagetemp.save(savename, 'jpeg')
+        imagetemp.save(savename, 'jpeg')
+        # if random.randint(0, 1000) % 4 == 0:
+        #     watermark(imagetemp, imgMark, POSITION[random.randint(0, 4)], random.randint(3,8)/10.0).save(savename, 'jpeg')
+        # else:
+        #     imagetemp.save(savename, 'jpeg')
 
 
         
